@@ -161,3 +161,10 @@ def delete_post(post_id):
     db.session.commit()
     flash("Your post has been deleted!", "success")
     return redirect(url_for("homepage"))
+
+
+@app.route("/user/<username>")
+def user(username):
+    user = User.query.filter_by(username=username).first()
+    posts = Post.query.filter_by(author=user)
+    return render_template("user.html", title=user.username, user=user, posts=posts)
