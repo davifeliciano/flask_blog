@@ -144,3 +144,6 @@ cython_debug/
 # Profile pictures folder
 flask_blog/static/profile_pics/*
 !flask_blog/static/profile_pics/default.jpg
+
+# Module to start server in debug mode
+app.py
