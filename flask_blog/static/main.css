@@ -53,6 +53,7 @@ a.article-title:hover {
 .article-img {
     height: 65px;
     width: 65px;
+    object-fit: cover;
     margin-right: 16px;
 }
 
