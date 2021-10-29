@@ -11,7 +11,8 @@ from flask_blog import app, db, bcrypt
 @app.route("/")
 @app.route("/home")
 def homepage():
-    posts = Post.query.all()
+    page = request.args.get("page", 1, type=int)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5, page=page)
     return render_template("homepage.html", title="Homepage", posts=posts)
 
 
@@ -137,15 +138,16 @@ def update_post(post_id):
     if post.author != current_user:
         abort(403)
     form = PostForm()
-    form.title.data = post.title
-    form.content.data = post.content
+
     if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
         db.session.commit()
         flash("Your post has been updated!", "success")
         return redirect(url_for("post", post_id=post.id))
     elif request.method == "GET":
-        post.title = form.title.data
-        post.content = form.content.data
+        form.title.data = post.title
+        form.content.data = post.content
     return render_template(
         "create_post.html", title="New Post", form=form, legend="Update Post"
     )
@@ -165,6 +167,11 @@ def delete_post(post_id):
 
 @app.route("/user/<username>")
 def user(username):
-    user = User.query.filter_by(username=username).first()
-    posts = Post.query.filter_by(author=user)
+    user = User.query.filter_by(username=username).first_or_404()
+    page = request.args.get("page", 1, type=int)
+    posts = (
+        Post.query.order_by(Post.date_posted.desc())
+        .filter_by(author=user)
+        .paginate(per_page=5, page=page)
+    )
     return render_template("user.html", title=user.username, user=user, posts=posts)
