@@ -1,5 +1,7 @@
-from datetime import datetime
-from flask_blog import db, login_manager
+from datetime import datetime, timedelta
+import jwt
+from flask import flash
+from flask_blog import db, login_manager, app
 from flask_login import UserMixin
 
 
@@ -20,6 +22,32 @@ class User(db.Model, UserMixin):
 
     def __repr__(self) -> str:
         return f"User(username='{self.username}', email='{self.email}', image_file='{self.image_file}')"
+
+    def get_reset_token(self, expires=30):
+        delta = timedelta(minutes=expires)
+        now = datetime.utcnow()
+        exp_time = now + delta
+        payload = {"exp": exp_time, "user_id": self.id}
+        return jwt.encode(payload=payload, key=app.config["SECRET_KEY"])
+
+    @staticmethod
+    def verify_reset_token(token):
+        try:
+            user_id = jwt.decode(
+                token,
+                key=app.config["SECRET_KEY"],
+                algorithms="HS256",
+                leeway=120,
+            )["user_id"]
+        except jwt.ExpiredSignatureError:
+            flash(
+                "This token has expired. Please, make another reset request.", "warning"
+            )
+            return None
+        except jwt.InvalidTokenError:
+            flash("This is an invalid token. Plese, make a reset request.", "warning")
+            return None
+        return User.query.get(user_id)
 
 
 class Post(db.Model):
