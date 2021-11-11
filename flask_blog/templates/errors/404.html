@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h1>404</h1>
+        <h2>Page Not Found</h2>
+        <p>The requested page was not found</p>
+        <a class="btn btn-outline-info" href="{{ url_for('main.homepage') }}">Take Me Home</a>
+    </div>
+{% endblock content %}

@@ -1,6 +1,5 @@
 from flask import Blueprint, url_for, render_template, flash, redirect, request, abort
 from flask_login import current_user, login_required
-from flask_mail import Message
 from .forms import PostForm
 from ..models import Post
 from flask_blog import db
