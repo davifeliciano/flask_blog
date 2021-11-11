@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
     <article class="media content-section">
-        <img class="align-self-start rounded-circle article-img mr-16" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+        <img class="align-self-start rounded-circle article-img mr-16 profile-picture" 
+             src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
+             data-toggle="modal" data-target="#pic{{ post.author.id }}ModalCenter">
         <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-2" href="{{ url_for('users.user', username=post.author.username) }}">{{ post.author.username }}</a>
@@ -17,7 +19,16 @@
             <p class="article-content">{{ post.content }}</p>
         </div>
     </article>
-    <!-- Modal -->
+    <!-- Profile Picture Modal -->
+    <div class="modal fade" id="pic{{ post.author.id }}ModalCenter" tabindex="-1" role="dialog" 
+         aria-labelledby="pic{{ post.author.id }}ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <img src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

@@ -2,7 +2,8 @@
 {% block content %}
     <div class="content-section">
         <div class="media">
-            <img class="rounded-circle account-img" src="{{ image_file }}">
+            <img class="rounded-circle account-img profile-picture" data-toggle="modal" 
+                 data-target="#pic{{ current_user.id }}ModalCenter" src="{{ image_file }}">
             <div class="media-body">
                 <h2 class="account-heading">{{ current_user.username }}</h2>
                 <p class="text-secondary">{{ current_user.email }}</p>
@@ -52,5 +53,14 @@
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
         </form>
+    </div>
+    <!-- Profile Picture Modal -->
+    <div class="modal fade" id="pic{{ current_user.id }}ModalCenter" tabindex="-1" role="dialog" 
+         aria-labelledby="pic{{ current_user.id }}ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <img src="{{ image_file }}">
+            </div>
+        </div>
     </div>
 {% endblock content %}
