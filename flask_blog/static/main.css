@@ -89,3 +89,7 @@ a.article-title:hover {
 .profile-picture:hover {
     cursor: pointer;
 }
+
+.sidebar-profile-pic:hover {
+    text-decoration: none;
+}

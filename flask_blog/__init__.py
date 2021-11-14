@@ -3,9 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_manager
 from flask_mail import Mail
-from flask_moment import Moment, moment
+from flask_moment import Moment
 from .config import Config
-
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -35,5 +34,19 @@ def create_app(config_class=Config):
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(errors)
+
+    from .models import User, Post
+
+    @app.context_processor
+    def inject_recent_posts():
+        return dict(
+            recent_posts=Post.query.order_by(Post.date_posted.desc()).limit(5).all()
+        )
+
+    @app.context_processor
+    def inject_recent_users():
+        return dict(
+            recent_users=User.query.order_by(User.date_signed_in.desc()).limit(8).all()
+        )
 
     return app
