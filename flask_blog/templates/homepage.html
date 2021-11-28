@@ -11,6 +11,11 @@
             </div>
             <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
+            {% if post.comments|count == 1 %}
+                <small class="text-muted">1 Comment</small>
+            {% else %}
+                <small class="text-muted">{{ post.comments|count }} Comment</small>
+            {% endif %}
         </div>
     </article>
     <!-- Profile Picture Modal -->

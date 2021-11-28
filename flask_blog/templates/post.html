@@ -17,6 +17,41 @@
             </div>
             <h2 class="article-title">{{ post.title }}</h2>
             <p class="article-content">{{ post.content }}</p>
+            {% for comment in post.comments %}
+                <div class="media">
+                    <img class="align-self-start rounded-circle article-img mr-16 profile-picture" 
+                         src="{{ url_for('static', filename='profile_pics/' + comment.author.image_file) }}"
+                         data-toggle="modal" data-target="#pic{{ comment.author.id }}ModalCenter">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            <a class="mr-2" href="{{ url_for('users.user', username=comment.author.username) }}">{{ comment.author.username }}</a>
+                            <small class="text-muted">{{ moment(comment.date_posted).format('LLLL') }}</small>
+                        </div>
+                        <p class="article-content">{{ comment.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <form method="post" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <div class="form-group">
+                        {{ form.content.label(class="form-control-label") }}
+                        {% if form.content.errors %}
+                            {{ form.content(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.content.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.content(class="form-control form-control-lg") }}    
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group mt-4">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
         </div>
     </article>
     <!-- Profile Picture Modal -->
