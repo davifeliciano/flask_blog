@@ -26,14 +26,25 @@ def new_post():
 
 @posts.route("/post/<int:post_id>", methods=("GET", "POST"))
 def post(post_id):
+    page = request.args.get("page", 1, type=int)
     post = Post.query.get_or_404(post_id)
     form = CommentForm()
+
     if form.validate_on_submit():
         comment = Comment(content=form.content.data, author=current_user, post=post)
         db.session.add(comment)
         db.session.commit()
         flash("Your comment has been posted!", "success")
-    return render_template("post.html", title=post.title, post=post, form=form)
+        return redirect(url_for("posts.post", post_id=post.id))
+
+    comments = (
+        Comment.query.filter_by(post_id=post.id)
+        .order_by(Comment.date_posted.asc())
+        .paginate(per_page=5, page=page)
+    )
+    return render_template(
+        "post.html", title=post.title, post=post, form=form, comments=comments
+    )
 
 
 @posts.route("/post/<int:post_id>/update", methods=("GET", "POST"))
