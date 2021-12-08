@@ -3,14 +3,15 @@
     <div class="content-section">
         <div class="media">
             <img class="rounded-circle account-img profile-picture" data-toggle="modal" 
-                 data-target="#pic{{ current_user.id }}ModalCenter" src="{{ image_file }}">
+                 data-target="#pic{{ current_user.id }}ModalCenter" src="{{ image_file }}" 
+                 alt="{{ current_user.username }} profile picture">
             <div class="media-body">
                 <h2 class="account-heading">{{ current_user.username }}</h2>
                 <p class="text-secondary">{{ current_user.email }}</p>
                 <p class="text-secondary">Member since {{ moment(current_user.date_signed_in).format('LL') }}</p>
             </div>
         </div>
-        <form method="post" action="" enctype="multipart/form-data">
+        <form method="post" action="#" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Account Info</legend>
@@ -60,7 +61,7 @@
          aria-labelledby="pic{{ current_user.id }}ModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <img src="{{ image_file }}">
+                <img src="{{ image_file }}" alt="{{ current_user.username }} profile picture">
             </div>
         </div>
     </div>

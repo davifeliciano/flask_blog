@@ -46,7 +46,7 @@
         </nav>
     </header>
 
-    <main role="main" class="container">
+    <main class="container">
         <div class="row">
             <div class="col-md-8">
                 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -71,7 +71,8 @@
                                     <div class="col-auto  text-center">
                                         <a class="sidebar-profile-pic" href="{{ url_for('users.user', username=post.author.username) }}">
                                             <img class="rounded-circle article-img mr-2" style="width: 30px; height: 30px"
-                                                 src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+                                                 src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
+                                                 alt="{{ post.author.username }} profile picture">
                                         </a>
                                     </div>
                                     <div class="col pl-0">
@@ -87,8 +88,9 @@
                         {% for user in recent_users %}
                             <div class="col text-center mb-4">
                                 <a class="sidebar-profile-pic" href="{{ url_for('users.user', username=user.username) }}">
-                                    <img class="align-self-center rounded-circle article-img"
-                                         src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">
+                                    <img class="align-self-center rounded-circle article-img m-0"
+                                         src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}"
+                                         alt="{{ user.username }} profile picture">
                                 </a> 
                             </div>
                         {% endfor %}

@@ -3,6 +3,7 @@
     <article class="media content-section">
         <img class="align-self-start rounded-circle article-img mr-16 profile-picture" 
              src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
+             alt="{{ post.author.username }} profile picture"
              data-toggle="modal" data-target="#pic{{ post.author.id }}ModalCenter">
         <div class="media-body">
             <div class="article-metadata">
@@ -21,6 +22,7 @@
                 <div class="media mb-4">
                     <img class="align-self-start rounded-circle article-img mr-16 profile-picture" 
                          src="{{ url_for('static', filename='profile_pics/' + comment.author.image_file) }}"
+                         alt="{{ post.author.username }} profile picture"
                          data-toggle="modal" data-target="#pic{{ comment.author.id }}ModalCenter">
                     <div class="media-body">
                         <div class="article-metadata">
@@ -31,7 +33,7 @@
                     </div>
                 </div>
             {% endfor %}
-            <form method="post" action="">
+            <form method="post" action="#">
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group">
                     <div class="form-group">
@@ -85,7 +87,8 @@
          aria-labelledby="pic{{ post.author.id }}ModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <img src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+                <img src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}"
+                     alt="{{ post.author.username }} profile picture">
             </div>
         </div>
     </div>
