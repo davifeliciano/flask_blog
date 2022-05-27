@@ -30,7 +30,9 @@ class User(db.Model, UserMixin):
         now = datetime.utcnow()
         exp_time = now + delta
         payload = {"exp": exp_time, "user_id": self.id}
-        return jwt.encode(payload=payload, key=current_app.config["SECRET_KEY"])
+        return jwt.encode(
+            payload=payload, key=current_app.config["SECRET_KEY"], algorithms="HS256"
+        )
 
     @staticmethod
     def verify_reset_token(token):
