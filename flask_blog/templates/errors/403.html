@@ -1,9 +1,10 @@
-{% extends "layout.html" %}
-{% block content %}
-    <div class="content-section">
-        <h1>403</h1>
-        <h2>Permission Denied</h2>
-        <p>You are not allowed to access this page</p>
-        <a class="btn btn-outline-info" href="{{ url_for('main.homepage') }}">Take Me Home</a>
-    </div>
+{% extends "layout.html" %} {% block content %}
+<div class="content-section">
+  <h1>403</h1>
+  <h2>Permission Denied</h2>
+  <p>You are not allowed to access this page</p>
+  <a class="btn btn-outline-info" href="{{ url_for('main.homepage') }}"
+    >Take Me Home</a
+  >
+</div>
 {% endblock content %}
